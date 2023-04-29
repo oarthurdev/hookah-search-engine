@@ -1,5 +1,4 @@
-import { Box, Container, Grid } from '@mui/material';
-import Header from './Header';
+import { Box, Grid } from '@mui/material';
 import Footer from './Footer';
 import SearchBar from './SearchBar';
 
@@ -9,8 +8,7 @@ function Home() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Header />
+    <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 64px - 56px)' }}>
         <Grid container direction="column" alignItems="center" spacing={2}>
           <Grid item>
@@ -19,7 +17,7 @@ function Home() {
         </Grid>
       </Box>
       <Footer />
-    </Box>
+    </div>
   );
 }
 
