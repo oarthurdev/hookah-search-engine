@@ -1,7 +1,8 @@
+import React from 'react';
 import { IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-function SearchButton({ onClick }) {
+const SearchButton = React.memo(({ onClick }) => {
   return (
     <IconButton color="primary" aria-label="Enviar" sx={{
       '&:hover': {
@@ -14,6 +15,6 @@ function SearchButton({ onClick }) {
       <SendIcon />
     </IconButton>
   );
-}
+});
 
 export default SearchButton;

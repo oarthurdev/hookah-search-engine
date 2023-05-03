@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Button, Modal, Box, TextField, Stack, Typography, IconButton } from '@mui/material';
+import { useState, useCallback } from 'react';
+import { Button, Modal, Box, TextField, Typography, IconButton, Grid } from '@mui/material';
 import { Google, Facebook } from '@mui/icons-material';
 
 function Header(props) {
-  const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const [open, setOpen] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+    const handleOpen = useCallback(() => {
+        setOpen(true);
+      }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -58,45 +58,55 @@ function Header(props) {
         Login
       </Button>
       <Modal open={open} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Box sx={style}>
-          <Stack spacing={2}>
-            <Typography variant="h6">Login</Typography>
+      <Box sx={style}>
+        <Typography variant="h6">Login</Typography>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
             <TextField
-              variant="outlined"
-              label="Email"
-              size="medium"
-              value={email}
-              onChange={handleEmailChange}
-              fullWidth
+                variant="outlined"
+                label="Email"
+                size="medium"
+                value={email}
+                onChange={handleEmailChange}
+                fullWidth
             />
+            </Grid>
+            <Grid item xs={12}>
             <TextField
-              variant="outlined"
-              label="Password"
-              size="medium"
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-              onKeyPress={handleKeyPress}
-              fullWidth
+                variant="outlined"
+                label="Password"
+                size="medium"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                onKeyPress={handleKeyPress}
+                fullWidth
             />
+            </Grid>
+            <Grid item xs={12}>
             <Button variant="contained" onClick={handleLoginSubmit} fullWidth>
-              Login
+                Login
             </Button>
+            </Grid>
+            <Grid item xs={12}>
             <Button variant="outlined" onClick={handleLoginSubmit} fullWidth>
-              Register
+                Register
             </Button>
-            <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
-              Or login with:
+            </Grid>
+            <Grid item xs={12}>
+            <Typography variant="subtitle1" align="center">
+                Or login with:
             </Typography>
-            <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
-              <IconButton color="primary" aria-label="Google login">
+            </Grid>
+            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <IconButton color="primary" aria-label="Google login">
                 <Google />
-              </IconButton>
-              <IconButton color="primary" aria-label="Facebook login">
+            </IconButton>
+            <IconButton color="primary" aria-label="Facebook login">
                 <Facebook />
-              </IconButton>
-            </Stack>
-          </Stack>
+            </IconButton>
+            </Grid>
+          </Grid>
         </Box>
       </Modal>
     </>

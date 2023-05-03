@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import CookieConsent from "react-cookie-consent";
 import Home from './components/Home';
 import Search from './components/Search';
 import NotFound from './components/NotFound';
@@ -10,6 +11,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
     </Router>
   );
 }

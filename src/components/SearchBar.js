@@ -1,24 +1,26 @@
-import { useState, useCallback } from 'react';
-import { TextField, Stack, IconButton, Box } from '@mui/material';
+import { useState, useCallback , useMemo} from 'react';
+import { TextField, Stack, Box } from '@mui/material';
 import SearchButton from './SearchButton';
 import Logo from './Logo';
-import { useNavigate } from 'react-router-dom';
 import Header from './Header';
+// import './SearchBar.scss';
 
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState('');
-  var navigate = useNavigate();
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+
+  const searchQuery = useMemo(() => `?q=${encodeURIComponent(searchTerm)}`, [searchTerm]);
 
   const handleSearchSubmit = useCallback(() => {
     if (searchTerm.trim() !== '') {
-      // Passando o termo de pesquisa como parâmetro 'q' na URL
-      const searchQuery = `?q=${encodeURIComponent(searchTerm)}`;
-      navigate(`/search${searchQuery}`)
+      window.location.href = `/search${searchQuery}`
     }
   }, [searchTerm]);
+
+  const handleSearchChange = useCallback((event) => {
+    setSearchTerm(event.target.value);
+  }, []);
+
+  
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
