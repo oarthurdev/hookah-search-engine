@@ -25,7 +25,7 @@ function Search() {
   const validatedSearchTerm = useMemo(() => searchTerm.replace(/[^\w\s]/gi, ''), [searchTerm])
 
   // Define o valor inicial do state searchTerm com base no 'q' na URL
-  useState(() => {
+  useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.has('q')) {
       setSearchTerm(decodeURIComponent(params.get('q')));
