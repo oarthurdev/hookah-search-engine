@@ -1,36 +1,47 @@
-import { useState } from 'react';
-import { Grid, TextField, IconButton, Box } from '@mui/material';
+import { useCallback, useState, useEffect, useMemo } from 'react';
+import { TextField, IconButton, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Logo from './Logo';
+import { debounce } from 'lodash';
+
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
   // Define o valor inicial do state searchTerm com base no 'q' na URL
-  useState(() => {
+  useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.has('q')) {
       setSearchTerm(decodeURIComponent(params.get('q')));
     }
   }, [location]);
 
-  const handleSearchChange = (event) => {
+  const validatedSearchTerm = useMemo(() => searchTerm.replace(/[^\w\s]/gi, ''), [searchTerm])
+  
+  const handleSearchChange = useCallback((event) => {
     setSearchTerm(event.target.value);
-  }
-
-  const handleSearchSubmit = () => {
-    if (searchTerm.trim() !== '') {
-      // Redireciona para a rota de resultados de pesquisa
-      navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
-    }
-  }
+  }, []);
+  
+  const handleSearchSubmit = useCallback(
+    debounce(() => {
+      if (validatedSearchTerm.trim() !== '') {
+        navigate(`/search?q=${encodeURIComponent(validatedSearchTerm)}`);
+      }
+    }, 500),
+    [searchTerm, navigate]
+  );
 
   return (
     <Box sx={{ mt: 4 }}>
       <Box display="flex" alignItems="center" mb={3}>
-        <img src="/narg-logo.png" alt="Google Logo" height={62} width={62} />
+        <img src="/narg-logo.png" alt="Google Logo" height={62} width={62} 
+             onClick={() => window.location.href = "/"}
+             style={{
+              cursor: "pointer",
+              '&:hover': { cursor: "pointer" }
+             }}
+        />
         <Box ml={2} flexGrow={1}>
           <TextField
             id="search-input"
@@ -49,6 +60,9 @@ function Search() {
                   <SearchIcon />
                 </IconButton>
               ),
+              inputProps: {
+                maxLength: 100 // example value
+              }
             }}
           />
         </Box>
