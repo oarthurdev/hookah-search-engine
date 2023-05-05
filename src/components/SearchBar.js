@@ -3,24 +3,25 @@ import { TextField, Stack, Box } from '@mui/material';
 import SearchButton from './SearchButton';
 import Logo from './Logo';
 import Header from './Header';
-// import './SearchBar.scss';
+import { SearchBarStyle } from './styles/SearchBar';
+import { useNavigate } from 'react-router-dom';
 
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState('');
-
+  const classes = SearchBarStyle()
   const searchQuery = useMemo(() => `?q=${encodeURIComponent(searchTerm)}`, [searchTerm]);
+  const navigate = useNavigate();
 
   const handleSearchSubmit = useCallback(() => {
     if (searchTerm.trim() !== '') {
-      window.location.href = `/search${searchQuery}`
+      navigate(`/search${searchQuery}`);
     }
-  }, [searchTerm]);
+  }, [searchTerm, navigate]);
 
   const handleSearchChange = useCallback((event) => {
     setSearchTerm(event.target.value);
   }, []);
 
-  
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -48,11 +49,7 @@ function SearchBar(props) {
           onChange={handleSearchChange}
           onKeyPress={handleKeyPress}
           value={searchTerm}
-          sx={{
-            width: '1000px',
-            flexGrow: 1,
-            maxWidth: { sm: '600px', md: '1000px' },
-          }}
+          className={classes.inputSearch}
           fullWidth
         />
         <SearchButton onClick={handleSearchSubmit} />

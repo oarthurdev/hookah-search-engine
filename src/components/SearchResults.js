@@ -4,14 +4,14 @@ function SearchResults(props) {
   const { results } = props;
 
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box sx={{ mt: 4 }} style={{ textAlign: 'center' }}>
       {results.length > 0 ? (
         <>
           <Typography variant="h6" gutterBottom>
             Resultados da pesquisa:
           </Typography>
           {results.map((result, index) => (
-            <Box key={index} mb={2}>
+            <Box key={result.id} mb={2}>
               <Typography variant="subtitle1">
                 <a href={result.link}>{result.title}</a>
               </Typography>
@@ -36,8 +36,8 @@ function SearchResults(props) {
           </Box>
         </>
       ) : (
-        <Typography variant="h6" gutterBottom>
-          Nenhum resultado encontrado
+        <Typography variant="h6" justifyContent="center" gutterBottom>
+            Nenhum resultado encontrado
         </Typography>
       )}
     </Box>

@@ -1,18 +1,31 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CookieConsent from "react-cookie-consent";
-import Home from './components/Home';
-import Search from './components/Search';
-import NotFound from './components/NotFound';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from './theme';
+import AuthenticationButton from './components/buttons/Auth';
+
+const SearchPage = lazy(() => import('./components/SearchPage'));
+const Search = lazy(() => import('./components/Search'));
+const NotFound = lazy(() => import('./components/NotFound'));
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AuthenticationButton />
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<SearchPage />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
+      </Router>
+    </ThemeProvider>
   );
 }
 
