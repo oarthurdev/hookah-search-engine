@@ -14,7 +14,7 @@ function SearchPage() {
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 64px - 56px)' }}>
-        <Grid container direction="column" alignItems="center" spacing={2}>
+        <Grid container direction="column" alignItems="center" >
           <Grid item>
             <MemoizedSearchBar onSearch={handleSearch} />
           </Grid>

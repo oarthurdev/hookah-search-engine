@@ -14,11 +14,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AuthenticationButton />
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/" element={<SearchPage />} />
+            <Route path="/" element={
+              <>
+                <AuthenticationButton />
+                <SearchPage />
+              </>
+            } />
             <Route path="/search" element={<Search />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

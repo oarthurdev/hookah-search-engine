@@ -10,11 +10,16 @@ const LogoutButton = () => {
   return (
     <Button
       className={classes.logoutBtn} 
+      sx={{
+        marginRight: '45px'
+      }}
       onClick={() =>
         logout({
           returnTo: window.location.origin,
         })
       }
+      variant="outlined"
+      color="error"
     >
       Log Out
     </Button>
