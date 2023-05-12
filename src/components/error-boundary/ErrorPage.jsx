@@ -4,7 +4,7 @@ export const ErrorPage = () => {
   return (
     <div className='error-page'>
       <h1>Error Occurred 🚨</h1>
-      <p>Can't render page. Please try again</p>
+      <h3>Can't render page. Please try again</h3>
     </div>
   );
 };

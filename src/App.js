@@ -22,7 +22,12 @@ function App() {
               <SearchPage />
             </>
           } />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search" element={
+            <>
+              {/* <AuthenticationButton /> */}
+              <Search />
+            </>
+          } />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
