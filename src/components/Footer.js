@@ -21,7 +21,7 @@ function Footer() {
                   rel="noopener noreferrer"
                   title={`${currentYear} ${COPYRIGHT_STRING}`}>  
 
-        {`${currentYear} ${COPYRIGHT_STRING}`}
+        {`${currentYear} © ${COPYRIGHT_STRING}`}
       </Typography>
     </Box>
   );

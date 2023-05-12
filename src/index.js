@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-//import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from "@auth0/auth0-react";
+import { AppLoader } from './components/loader/AppLoader';
+import ErrorBoundary from './components/error-boundary/ErrorBoundary';
+import { ErrorPage } from './components/error-boundary/ErrorPage';
+
+const App = React.lazy(() => import("./App"));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +18,11 @@ root.render(
         redirect_uri: window.location.origin,
       }}
     >
-      <App />
+      <ErrorBoundary fallback={<ErrorPage />}>
+        <Suspense fallback={<AppLoader />}>
+          <App />
+        </Suspense>
+      </ErrorBoundary>
     </Auth0Provider>
   </React.StrictMode>
 );

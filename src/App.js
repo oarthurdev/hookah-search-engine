@@ -1,5 +1,5 @@
 import CookieConsent from "react-cookie-consent";
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,18 +15,16 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={
-              <>
-                <AuthenticationButton />
-                <SearchPage />
-              </>
-            } />
-            <Route path="/search" element={<Search />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <AuthenticationButton />
+              <SearchPage />
+            </>
+          } />
+          <Route path="/search" element={<Search />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
         <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
       </Router>
     </ThemeProvider>
