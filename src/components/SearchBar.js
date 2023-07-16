@@ -2,7 +2,6 @@ import { useState, useCallback , useMemo} from 'react';
 import { TextField, Stack, Box } from '@mui/material';
 import SearchButton from './SearchButton';
 import Logo from './Logo';
-import Header from './Header';
 import { SearchBarStyle } from './styles/SearchBar';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,7 +30,6 @@ function SearchBar(props) {
 
   return (
     <div style={{ paddingTop: '0px' }}>
-      <Header />
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '20px' }}>
         <Logo />
       </Box>
