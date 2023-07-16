@@ -4,14 +4,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchResults from './SearchResults';
 import { debounce } from 'lodash';
-import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import ElasticSearch from './SearchElastic';
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -26,42 +22,13 @@ function Search() {
     setSearchTerm(event.target.value);
   }, []);
 
-  const ELASTIC_SEARCH_URL = process.env.REACT_APP_ELASTIC_SEARCH_URL;
-  const SEARCH_INDEX_NAME = process.env.REACT_APP_SEARCH_INDEX_NAME;
-  const USERNAME = process.env.REACT_APP_ELASTIC_USERNAME;
-  const PASSWORD = process.env.REACT_APP_ELASTIC_PASSWORD;
-
-  const axiosInstance = axios.create({
-    baseURL: ELASTIC_SEARCH_URL,
-    auth: {
-      username: USERNAME,
-      password: PASSWORD,
-    },
-  });
-
-  const handleSearchSubmit = debounce(async (searchTerm) => {
+  const handleSearchSubmit = debounce((searchTerm) => {
     if (typeof searchTerm === 'string' && searchTerm.trim() !== '') {
-      try {
-        const response = await axiosInstance.get(`${ELASTIC_SEARCH_URL}/${SEARCH_INDEX_NAME}/_search`, {
-          params: {
-            q: searchTerm,
-          },
-        });
-
-        const hits = response.data.hits.hits;
-        const formattedResults = hits.map((hit) => ({
-          title: hit._source.name,
-          description: hit._source.description,
-          link: hit._source.link,
-          image: hit._source.image,
-        }));
-        setResults(formattedResults);
-        navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
-      } catch (error) {
-        console.error('Error searching documents:', error);
-      }
+      navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
     }
   }, 500);
+
+  const results = ElasticSearch({ searchTerm });
 
   return (
     <Box sx={{ mt: 4 }}>
